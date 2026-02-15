@@ -25,7 +25,7 @@ export function ProgressIndicator({ currentSection }: ProgressIndicatorProps) {
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.5 }}
-      className="fixed top-6 left-1/2 -translate-x-1/2 z-40 rounded-full px-2 py-2 flex items-center gap-1"
+      className="fixed top-6 left-4 md:left-1/2 md:-translate-x-1/2 z-40 rounded-full px-2 py-2 flex items-center gap-1"
       style={{
         background: glassBg,
         border: `1px solid ${glassBorder}`,

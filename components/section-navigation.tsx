@@ -36,7 +36,7 @@ export function SectionNavigation({
   const hoverBg = isDark ? "rgba(255,255,255,0.14)" : "rgba(0,0,0,0.10)"
 
   return (
-    <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-end px-6 md:px-12 pointer-events-none" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+    <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-center md:justify-end px-6 md:px-12 pointer-events-none" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
       {/* Continue-only button */}
       <motion.button
         initial={{ opacity: 0, x: 20 }}
@@ -44,7 +44,7 @@ export function SectionNavigation({
         onClick={handleContinue}
         whileHover={{ scale: 1.05, y: -2 }}
         whileTap={{ scale: 0.97 }}
-        className="rounded-lg px-5 py-3 min-h-[44px] flex items-center gap-2 text-sm font-medium pointer-events-auto transition-all duration-300"
+        className="rounded-lg px-6 py-3.5 md:px-5 md:py-3 min-h-[48px] md:min-h-[44px] flex items-center gap-2 text-sm font-medium pointer-events-auto transition-all duration-300"
         style={{
           background: glassBg,
           border: `1px solid ${glassBorder}`,
@@ -62,11 +62,11 @@ export function SectionNavigation({
         {isLast ? (
           <>
             <Home className="w-4 h-4" />
-            <span className="hidden md:inline"><AnimatedText text={t.backToHome} /></span>
+            <AnimatedText text={t.backToHome} />
           </>
         ) : (
           <>
-            <span className="hidden md:inline"><AnimatedText text={t.continue} /></span>
+            <AnimatedText text={t.continue} />
             <ChevronRight className="w-4 h-4" />
           </>
         )}
