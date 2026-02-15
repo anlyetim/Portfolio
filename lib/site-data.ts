@@ -175,9 +175,10 @@ export const portfolioRows: ProjectRow[] = [
 
 // ─── Social Links (Contact Section) ───────────────────────────
 export const socialLinks = [
-  { name: "GitHub", iconName: "github" as const, href: "#" },
-  { name: "LinkedIn", iconName: "linkedin" as const, href: "#" },
-  { name: "Instagram", iconName: "instagram" as const, href: "#" },
+  { name: "GitHub", iconName: "github" as const, href: "https://github.com/anlyetim" },
+  { name: "LinkedIn", iconName: "linkedin" as const, href: "https://www.linkedin.com/in/anl-yetim/" },
+  { name: "ArtStation", iconName: "artstation" as const, href: "https://anly05.artstation.com/" },
+  { name: "Instagram", iconName: "instagram" as const, href: "https://www.instagram.com/anl.y05/" },
 ]
 
 // ─── i18n Strings ─────────────────────────────────────────────

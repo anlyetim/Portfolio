@@ -7,11 +7,23 @@ import { socialLinks } from "@/lib/site-data"
 import { useSettings } from "@/lib/settings-context"
 import { AnimatedText } from "@/components/animated-text"
 
-const iconMap = {
+const ArtStationIcon = ({ className }: { className?: string }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+  >
+    <path d="M1.77 16.88l1.73 3a2.07 2.07 0 001.79 1.04h10.6l-2.37-4.04H1.77zm20.46-1.09L15.1 3.08A2.08 2.08 0 0013.33 2H9.77l10.12 17.37 2.34-2.53a2.07 2.07 0 000-1.05zM9.2 15.79l3 5.13H6.16l3.04-5.13z" />
+  </svg>
+)
+
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   github: Github,
   linkedin: Linkedin,
   instagram: Instagram,
-} as const
+  artstation: ArtStationIcon,
+}
 
 const containerVariants = {
   hidden: { opacity: 0 },
