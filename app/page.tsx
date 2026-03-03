@@ -48,26 +48,7 @@ function PortfolioApp() {
     return () => observerRef.current?.disconnect()
   }, [])
 
-  // Mobile: lock body scrolling — navigate only via Continue button
-  useEffect(() => {
-    if (isMobile) {
-      document.body.style.overflow = "hidden"
-      document.body.style.position = "fixed"
-      document.body.style.width = "100%"
-      document.body.style.height = "100%"
-    } else {
-      document.body.style.overflow = ""
-      document.body.style.position = ""
-      document.body.style.width = ""
-      document.body.style.height = ""
-    }
-    return () => {
-      document.body.style.overflow = ""
-      document.body.style.position = ""
-      document.body.style.width = ""
-      document.body.style.height = ""
-    }
-  }, [isMobile])
+
 
   const navigateTo = useCallback((index: number) => {
     const el = document.getElementById(sectionIds[index])
@@ -79,13 +60,13 @@ function PortfolioApp() {
   return (
     <main
       ref={containerRef}
-      className={`scroll-snap-container relative ${isMobile ? "mobile-locked" : ""}`}
+      className="scroll-snap-container relative"
     >
       {/* Noise overlay */}
       <div className="noise-overlay" aria-hidden="true" />
 
       {/* Top controls */}
-      <ProgressIndicator currentSection={currentSection} />
+      <ProgressIndicator currentSection={currentSection} onNavigate={navigateTo} />
       <SettingsToggles />
 
       {/* Continue-only navigation (no back button) */}

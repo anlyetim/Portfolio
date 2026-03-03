@@ -184,7 +184,23 @@ function JigsawPiece({
                 border: `1px solid rgba(${rgb.r},${rgb.g},${rgb.b},0.25)`,
               }}
             >
-              {piece.icon}
+              {piece.logoUrl ? (
+                <img
+                  src={piece.logoUrl}
+                  alt={piece.name}
+                  width={24}
+                  height={24}
+                  draggable={false}
+                  style={{
+                    filter: isDark
+                      ? "brightness(0) invert(1)"
+                      : "brightness(0)",
+                    pointerEvents: "none",
+                  }}
+                />
+              ) : (
+                piece.icon
+              )}
             </div>
             <span
               className="text-[10px] font-medium tracking-wider"
@@ -226,6 +242,14 @@ function PuzzleBoard({
 }) {
   const { theme, t } = useSettings()
   const isDark = theme === "dark"
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener("resize", check)
+    return () => window.removeEventListener("resize", check)
+  }, [])
 
   const rows = Math.max(...skillList.map((s) => s.row)) + 1
   const cols = Math.max(...skillList.map((s) => s.col)) + 1
@@ -298,16 +322,66 @@ function PuzzleBoard({
   const scatter = useCallback(() => {
     setPieces((prev) => {
       const next = { ...prev }
-      Object.keys(next).forEach((id) => {
-        const randX = PADDING + Math.random() * (boardW - PIECE_W - PADDING * 2)
-        const randY = PADDING + Math.random() * (boardH - PIECE_H - PADDING * 2)
-        next[id] = { ...next[id], x: randX, y: randY, isLocked: false }
+      const ids = Object.keys(next)
+      const placed: { x: number; y: number }[] = []
+      const svgW = PIECE_W + PADDING * 2
+      const svgH = PIECE_H + PADDING * 2
+
+      // Mobile: scatter top/bottom only, stay on screen
+      // Desktop: scatter all four sides
+      const SPREAD = isMobile ? 120 : 180
+      const MIN_DIST = isMobile ? 110 : 155
+
+      const zones = isMobile
+        ? [
+          // Top zone (stays within board width)
+          { xMin: 0, xMax: boardW - svgW, yMin: -SPREAD - svgH, yMax: -10 },
+          // Bottom zone
+          { xMin: 0, xMax: boardW - svgW, yMin: boardH + 10, yMax: boardH + SPREAD + svgH },
+        ]
+        : [
+          { xMin: -SPREAD - svgW, xMax: boardW + SPREAD, yMin: -SPREAD - svgH, yMax: -10 },
+          { xMin: -SPREAD - svgW, xMax: boardW + SPREAD, yMin: boardH + 10, yMax: boardH + SPREAD + svgH },
+          { xMin: -SPREAD - svgW, xMax: -10, yMin: 0, yMax: boardH },
+          { xMin: boardW + 10, xMax: boardW + SPREAD + svgW, yMin: 0, yMax: boardH },
+        ]
+
+      ids.forEach((id) => {
+        let bestX = 0
+        let bestY = 0
+        let found = false
+
+        for (let attempt = 0; attempt < 100; attempt++) {
+          const zone = zones[Math.floor(Math.random() * zones.length)]
+          const rx = zone.xMin + Math.random() * (zone.xMax - zone.xMin)
+          const ry = zone.yMin + Math.random() * (zone.yMax - zone.yMin)
+
+          const tooClose = placed.some(
+            (p) => Math.hypot(p.x - rx, p.y - ry) < MIN_DIST
+          )
+          if (!tooClose) {
+            bestX = rx
+            bestY = ry
+            found = true
+            break
+          }
+        }
+
+        if (!found) {
+          const angle = (placed.length / ids.length) * Math.PI * 2
+          const dist = SPREAD + 80 + placed.length * 30
+          bestX = boardW / 2 + Math.cos(angle) * dist - PIECE_W / 2
+          bestY = boardH / 2 + Math.sin(angle) * dist - PIECE_H / 2
+        }
+
+        placed.push({ x: bestX, y: bestY })
+        next[id] = { ...next[id], x: bestX + PADDING, y: bestY + PADDING, isLocked: false }
       })
       return next
     })
     setIsScattered(true)
     setJustSolved(false)
-  }, [boardW, boardH])
+  }, [boardW, boardH, isMobile])
 
   const solve = useCallback(() => {
     setPieces((prev) => {
@@ -417,7 +491,7 @@ function PuzzleBoard({
     <div className="flex flex-col items-center gap-6">
       <div
         ref={boardRef}
-        className="relative rounded-2xl overflow-hidden touch-none touch-allow-all"
+        className="relative rounded-2xl overflow-visible touch-none touch-allow-all"
         style={{
           width: boardW,
           height: boardH,
@@ -562,6 +636,74 @@ function PuzzleBoard({
   )
 }
 
+// ─── Puzzle Board Scaler (viewport-responsive on mobile) ─────────
+
+function PuzzleBoardScaler({ activeTab, children }: { activeTab: string; children: React.ReactNode }) {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [scale, setScale] = useState(1)
+  const [naturalSize, setNaturalSize] = useState({ w: 0, h: 0 })
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const measure = () => {
+      const mobile = window.innerWidth < 768
+      setIsMobile(mobile)
+
+      if (!containerRef.current) return
+      // Measure the inner content's natural dimensions
+      const inner = containerRef.current
+      const w = inner.scrollWidth
+      const h = inner.scrollHeight
+      setNaturalSize({ w, h })
+
+      if (mobile && w > 0) {
+        const availW = window.innerWidth - 24 // 12px padding each side
+        const s = Math.min(availW / w, 1)
+        setScale(s)
+      } else {
+        setScale(1)
+      }
+    }
+
+    const timer = setTimeout(measure, 60)
+    window.addEventListener("resize", measure)
+    return () => {
+      clearTimeout(timer)
+      window.removeEventListener("resize", measure)
+    }
+  }, [activeTab])
+
+  if (!isMobile) {
+    return <div ref={containerRef}>{children}</div>
+  }
+
+  const scaledW = naturalSize.w * scale
+  const scaledH = naturalSize.h * scale
+
+  return (
+    <div
+      className="flex justify-center"
+      style={{
+        width: "100%",
+        height: scaledH || "auto",
+        transition: "height 0.35s ease",
+      }}
+    >
+      <div
+        ref={containerRef}
+        style={{
+          transform: `scale(${scale})`,
+          transformOrigin: "top center",
+          width: naturalSize.w || "auto",
+          transition: "transform 0.35s ease",
+        }}
+      >
+        {children}
+      </div>
+    </div>
+  )
+}
+
 // ─── Main Skills Section ─────────────────────────────────────────
 
 const TABS: TabKey[] = ["development", "design", "cyber"]
@@ -591,21 +733,47 @@ export function SkillsSection() {
     ? "0 0 20px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.08)"
     : "0 0 20px rgba(0,0,0,0.03), inset 0 1px 0 rgba(255,255,255,0.4)"
 
+  const bgImage = activeTab === "development"
+    ? (isDark ? "/walls/development_blackwall.jpg" : "/walls/developmentwhitewall.jpg")
+    : activeTab === "design"
+      ? (isDark ? "/walls/designblackwall.jpg" : "/walls/designwhitewall.jpg")
+      : (isDark ? "/walls/cybersecurityblackwall.jpg" : "/walls/cybersecuritywhitewall.jpg")
+
   return (
     <section
       id="skills"
-      className="scroll-snap-section flex items-center justify-center px-4 sm:px-6 md:px-12 lg:px-24 py-10 relative overflow-hidden"
+      className="scroll-snap-section flex items-center justify-center px-4 sm:px-6 md:px-12 lg:px-24 py-10 relative overflow-hidden md:overflow-visible"
     >
+      {/* Background Image with theme/tab transitions */}
+      <div className="absolute inset-0 z-[-1] pointer-events-none overflow-hidden rounded-none">
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            key={bgImage}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.2, ease: "easeInOut" }}
+            className="absolute inset-0"
+          >
+            <img
+              src={bgImage}
+              alt={`${activeTab} background`}
+              className="w-full h-full object-cover scale-[1.03] blur-[3px]"
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
       {/* Ambient light */}
       <motion.div
-        key={activeTab}
+        key={`ambient-${activeTab}`}
         animate={{
           x: [0, 100, -50, 0],
           y: [0, -80, 60, 0],
           opacity: [0.04, 0.08, 0.04],
         }}
         transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-1/3 left-1/3 w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none"
+        className="absolute top-1/3 left-1/3 w-[500px] h-[500px] rounded-full blur-[150px] pointer-events-none z-[-1]"
         style={{ backgroundColor: `rgba(${accentRgb.r},${accentRgb.g},${accentRgb.b},0.08)` }}
       />
 
@@ -651,8 +819,8 @@ export function SkillsSection() {
           })}
         </motion.div>
 
-        {/* Puzzle boards */}
-        <div className="w-full flex justify-center overflow-x-auto scrollbar-hide">
+        {/* Puzzle boards - dynamically scaled on mobile */}
+        <div className="w-full flex justify-center overflow-visible">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -661,7 +829,9 @@ export function SkillsSection() {
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.3 }}
             >
-              <PuzzleBoard skillList={SKILL_MAP[activeTab]} boardKey={activeTab} accentColor={accent} />
+              <PuzzleBoardScaler activeTab={activeTab}>
+                <PuzzleBoard skillList={SKILL_MAP[activeTab]} boardKey={activeTab} accentColor={accent} />
+              </PuzzleBoardScaler>
             </motion.div>
           </AnimatePresence>
         </div>

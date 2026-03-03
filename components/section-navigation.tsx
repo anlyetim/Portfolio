@@ -36,7 +36,7 @@ export function SectionNavigation({
   const hoverBg = isDark ? "rgba(255,255,255,0.14)" : "rgba(0,0,0,0.10)"
 
   return (
-    <div className="fixed bottom-8 left-0 right-0 z-40 flex justify-center md:justify-end px-6 md:px-12 pointer-events-none" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+    <div className="fixed bottom-8 left-0 right-0 z-40 hidden md:flex justify-end px-6 md:px-12 pointer-events-none" style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
       {/* Continue-only button */}
       <motion.button
         initial={{ opacity: 0, x: 20 }}

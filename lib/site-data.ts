@@ -32,34 +32,34 @@ export interface SkillPiece {
 
 export const skills = {
   development: [
-    { id: "react", name: "React", color: "#61DAFB", icon: "Re", row: 0, col: 0 },
-    { id: "java", name: "Java", color: "#ED8B00", icon: "Ja", row: 0, col: 1 },
-    { id: "unity", name: "Unity", color: "#CCCCCC", icon: "Un", row: 0, col: 2 },
-    { id: "threejs", name: "Three.js", color: "#049EF4", icon: "3D", row: 0, col: 3 },
-    { id: "typescript", name: "TypeScript", color: "#3178C6", icon: "TS", row: 1, col: 0 },
-    { id: "nextjs", name: "Next.js", color: "#CCCCCC", icon: "Nx", row: 1, col: 1 },
-    { id: "nodejs", name: "Node.js", color: "#68A063", icon: "No", row: 1, col: 2 },
-    { id: "python", name: "Python", color: "#3776AB", icon: "Py", row: 1, col: 3 },
+    { id: "react", name: "React", color: "#61DAFB", icon: "Re", logoUrl: "/icons/react-16-svgrepo-com.svg", row: 0, col: 0 },
+    { id: "java", name: "Java", color: "#ED8B00", icon: "Ja", logoUrl: "/icons/java-svgrepo-com.svg", row: 0, col: 1 },
+    { id: "csharp", name: "C#", color: "#68217A", icon: "C#", logoUrl: "/icons/c-sharp-16-svgrepo-com.svg", row: 0, col: 2 },
+    { id: "threejs", name: "Three.js", color: "#049EF4", icon: "3D", logoUrl: "/icons/Threejs-logo.svg", row: 0, col: 3 },
+    { id: "typescript", name: "TypeScript", color: "#3178C6", icon: "TS", logoUrl: "/icons/typescript-16-svgrepo-com.svg", row: 1, col: 0 },
+    { id: "nodejs", name: "Node.js", color: "#68A063", icon: "No", logoUrl: "/icons/node-js-svgrepo-com.svg", row: 1, col: 1 },
+    { id: "python", name: "Python", color: "#3776AB", icon: "Py", logoUrl: "/icons/python-127-svgrepo-com.svg", row: 1, col: 2 },
+    { id: "flutter", name: "Flutter", color: "#02569B", icon: "Fl", logoUrl: "/icons/flutter-svgrepo-com.svg", row: 1, col: 3 },
   ] as SkillPiece[],
 
   design: [
-    { id: "figma", name: "Figma", color: "#F24E1E", icon: "Fi", row: 0, col: 0 },
-    { id: "blender", name: "Blender", color: "#EA7600", icon: "Bl", row: 0, col: 1 },
-    { id: "photoshop", name: "Photoshop", color: "#31A8FF", icon: "Ps", row: 0, col: 2 },
-    { id: "krita", name: "Krita", color: "#3BABFF", icon: "Kr", row: 1, col: 0 },
-    { id: "illustrator", name: "Illustrator", color: "#FF9A00", icon: "Ai", row: 1, col: 1 },
-    { id: "substance", name: "Substance", color: "#82C800", icon: "Su", row: 1, col: 2 },
+    { id: "blender", name: "Blender", color: "#EA7600", icon: "Bl", logoUrl: "/icons/blender-svgrepo-com.svg", row: 0, col: 0 },
+    { id: "photoshop", name: "Photoshop", color: "#31A8FF", icon: "Ps", logoUrl: "/icons/photoshop-svgrepo-com.svg", row: 0, col: 1 },
+    { id: "unity", name: "Unity", color: "#CCCCCC", icon: "Un", logoUrl: "/icons/unity-svgrepo-com.svg", row: 0, col: 2 },
+    { id: "premiere", name: "Premiere Pro", color: "#9999FF", icon: "Pr", logoUrl: "/icons/premiere-svgrepo-com.svg", row: 1, col: 0 },
+    { id: "aftereffects", name: "After Effects", color: "#9999FF", icon: "Ae", logoUrl: "/icons/aftereffects-svgrepo-com.svg", row: 1, col: 1 },
+    { id: "canva", name: "Canva", color: "#00C4CC", icon: "Ca", logoUrl: "/icons/canva-svgrepo-com.svg", row: 1, col: 2 },
   ] as SkillPiece[],
 
   cyber: [
-    { id: "kali", name: "Kali Linux", color: "#557C94", icon: "Ka", row: 0, col: 0 },
-    { id: "burp", name: "Burp Suite", color: "#FF6633", icon: "Bu", row: 0, col: 1 },
-    { id: "wireshark", name: "Wireshark", color: "#1679A7", icon: "Ws", row: 0, col: 2 },
-    { id: "nmap", name: "Nmap", color: "#4682B4", icon: "Nm", row: 0, col: 3 },
-    { id: "linux", name: "Linux", color: "#FCC624", icon: "Li", row: 1, col: 0 },
-    { id: "py-cyber", name: "Python", color: "#3776AB", icon: "Py", row: 1, col: 1 },
-    { id: "owasp", name: "OWASP", color: "#CC2222", icon: "Ow", row: 1, col: 2 },
-    { id: "metasploit", name: "Metasploit", color: "#2596CD", icon: "Ms", row: 1, col: 3 },
+    { id: "kali", name: "Kali Linux", color: "#557C94", icon: "Ka", logoUrl: "/icons/kalilinux-svgrepo-com.svg", row: 0, col: 0 },
+    { id: "burp", name: "Burp Suite", color: "#FF6633", icon: "Bu", logoUrl: "/icons/Burpsuite--Streamline-Simple-Icons.svg", row: 0, col: 1 },
+    { id: "wireshark", name: "Wireshark", color: "#1679A7", icon: "Ws", logoUrl: "/icons/wireshark-svgrepo-com.svg", row: 0, col: 2 },
+    { id: "nmap", name: "Nmap", color: "#4682B4", icon: "Nm", logoUrl: "/icons/nmap_icon_132152.svg", row: 0, col: 3 },
+    { id: "terminal", name: "Terminal", color: "#4EAA25", icon: "Te", logoUrl: "/icons/terminal-svgrepo-com.svg", row: 1, col: 0 },
+    { id: "py-cyber", name: "Python", color: "#3776AB", icon: "Py", logoUrl: "/icons/python-127-svgrepo-com.svg", row: 1, col: 1 },
+    { id: "owasp", name: "OWASP", color: "#CC2222", icon: "Ow", logoUrl: "/icons/Owasp--Streamline-Simple-Icons.svg", row: 1, col: 2 },
+    { id: "metasploit", name: "Metasploit", color: "#2596CD", icon: "Ms", logoUrl: "/icons/Metasploit--Streamline-Simple-Icons.svg", row: 1, col: 3 },
   ] as SkillPiece[],
 }
 
@@ -81,6 +81,8 @@ export interface Project {
   thumbnailUrl?: string  // optional: URL to a project screenshot
   gallery?: string[]     // optional: multiple images/videos shown side-by-side
   artstationUrl?: string
+  githubUrl?: string
+  thumbnailMode?: "icon" | "themed-icon"  // icon: centered image, themed-icon: SVG that inverts with theme
 }
 
 export interface ProjectRow {
@@ -90,6 +92,109 @@ export interface ProjectRow {
 }
 
 export const portfolioRows: ProjectRow[] = [
+  {
+    category: "Coding / Software Projects",
+    categoryTR: "Yazılım Projeleri",
+    projects: [
+      {
+        id: "c1",
+        title: "Glox",
+        description: "A colorful and addictive mobile puzzle game built with Flutter.",
+        descriptionTR: "Flutter ile geliştirilmiş renkli ve bağımlılık yapıcı bir mobil bulmaca oyunu.",
+        tags: ["Flutter", "Dart", "Mobile", "Game"],
+        color: "#02569B",
+        gallery: [
+          "/coding_portfolio/glox/st1.png",
+          "/coding_portfolio/glox/st2.png",
+          "/coding_portfolio/glox/st3.png",
+        ],
+        githubUrl: "https://github.com/anlyetim/Glox",
+      },
+      {
+        id: "c2",
+        title: "ActionRing",
+        description: "A fast-paced action ring mobile game with dynamic gameplay mechanics.",
+        descriptionTR: "Dinamik oyun mekanikleri ile hızlı tempolu bir aksiyon halka mobil oyunu.",
+        tags: ["Mobile", "Game", "Android"],
+        color: "#4CAF50",
+        thumbnailUrl: "/coding_portfolio/actionring_icon.png",
+        thumbnailMode: "icon",
+        githubUrl: "https://github.com/anlyetim/ActionRing",
+      },
+      {
+        id: "c3",
+        title: "3D Particle Website",
+        description: "An interactive 3D particle-based website with immersive visual effects.",
+        descriptionTR: "Sürükleyici görsel efektlerle interaktif 3D parçacık tabanlı bir web sitesi.",
+        tags: ["Three.js", "JavaScript", "WebGL"],
+        color: "#9C27B0",
+        thumbnailUrl: "/coding_portfolio/3dparticle.png",
+        githubUrl: "https://github.com/anlyetim/3DParticleWebsite",
+      },
+      {
+        id: "c4",
+        title: "1111 Game",
+        description: "A number guessing game with clean UI and engaging gameplay.",
+        descriptionTR: "Temiz arayüz ve ilgi çekici oynanış ile bir sayı tahmin oyunu.",
+        tags: ["Game", "Web", "JavaScript"],
+        color: "#FF9800",
+        thumbnailUrl: "/coding_portfolio/1111game.jpg",
+        githubUrl: "https://github.com/anlyetim/1111-Number-Guessing-Game",
+      },
+      {
+        id: "c5",
+        title: "DunkLocate",
+        description: "A location-based basketball court finder application.",
+        descriptionTR: "Konum tabanlı bir basketbol sahası bulma uygulaması.",
+        tags: ["Mobile", "Maps", "Location"],
+        color: "#E65100",
+        thumbnailUrl: "/coding_portfolio/dunklocate.png",
+        githubUrl: "https://github.com/anlyetim/DunkLocate",
+      },
+      {
+        id: "c6",
+        title: "Modern Portfolio Website",
+        description: "A sleek, modern portfolio website with smooth animations and responsive design.",
+        descriptionTR: "Akıcı animasyonlar ve duyarlı tasarım ile şık, modern bir portfolyo web sitesi.",
+        tags: ["Next.js", "React", "TypeScript"],
+        color: "#2196F3",
+        thumbnailUrl: "/coding_portfolio/modernportfolio.png",
+        githubUrl: "https://github.com/anlyetim/Modern-Portfolio",
+      },
+      {
+        id: "c7",
+        title: "PortXplorer",
+        description: "A network port scanning and exploration tool for cybersecurity analysis.",
+        descriptionTR: "Siber güvenlik analizi için bir ağ port tarama ve keşif aracı.",
+        tags: ["Python", "Cybersecurity", "Networking"],
+        color: "#2196F3",
+        thumbnailUrl: "/coding_portfolio/cybersecurity-black-icon.svg",
+        thumbnailMode: "themed-icon",
+        githubUrl: "https://github.com/anlyetim/PortXplorer",
+      },
+      {
+        id: "c8",
+        title: "TeamPad",
+        description: "A collaborative team notepad application for real-time note sharing.",
+        descriptionTR: "Gerçek zamanlı not paylaşımı için işbirlikçi bir takım not defteri uygulaması.",
+        tags: ["Web", "Collaboration", "Real-time"],
+        color: "#4CAF50",
+        thumbnailUrl: "/coding_portfolio/Teampad.png",
+        githubUrl: "https://github.com/anlyetim/TeamPad",
+      },
+      {
+        id: "c9",
+        title: "Metasploit Pentesting",
+        description: "A penetration testing toolkit and documentation for security assessments.",
+        descriptionTR: "Güvenlik değerlendirmeleri için bir penetrasyon testi araç seti ve dokümantasyonu.",
+        tags: ["Python", "Cybersecurity", "Pentesting"],
+        color: "#FF0000",
+        thumbnailUrl: "/coding_portfolio/cybersecurity-black-icon.svg",
+        thumbnailMode: "themed-icon",
+        githubUrl: "https://github.com/anlyetim/Metasploit-Pentesting",
+      },
+    ],
+  },
   {
     category: "3D / Design Projects",
     categoryTR: "3D / Tasarım Projeleri",

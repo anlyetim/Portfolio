@@ -15,8 +15,8 @@ const spaceMono = Space_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'Anil (Moksha) | Interactive Developer',
-  description: 'Premium 3D portfolio — Game Dev, Web, 3D & UI/UX',
+  title: 'Anıl YETİM',
+  description: 'Just a simple coder guy',
 }
 
 export const viewport: Viewport = {
